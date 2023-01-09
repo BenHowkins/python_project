@@ -73,5 +73,15 @@ class Ships:
             print("Invalid input")
             return self.get_input()
 
-    def destroy_ships(self):
-        
+    def destroyed_ships(self):
+        """
+        Checks to see if a ship has been destroyed
+        and keeps count on how many are left on the board
+        and how many have been destroyed
+        """
+        ships_destroyed = 0
+        for row in self.board:
+            for column in row:
+                if column == "#":
+                    ships_destroyed += 1
+        return ships_destroyed
