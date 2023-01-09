@@ -25,8 +25,8 @@ class Board:
         """
         Print the board to the user to play the game
         """
-        print(" A B C D E F G H I")
-        print(" +-+-+-+-+-+-+-+-+")
+        print("  A B C D E F G H I")
+        print(" +-+-+-+-+-+-+-+-+-+")
         row_num = 1
         for row in self.board:
             print("%d|%s|" % (row_num, "|".join(row)))
@@ -43,14 +43,11 @@ class Ships:
         Creates and places the ships on the guess board
         whilst also checking there isn't already a ship there
         """
-        for i in range(10):
-            self.x_row, self.y_column = random.randint(0, 9), 
-            random.randint(0, 9)
-            while self.board[self.x_row][self.y_column] == "#":
-                self.x_row, self.y_column = random.randint(0, 9), 
-                random.randint(0, 9)
-            self.board[self.x_row][self.y_column] = "#"
-            return self.board
+        for ship in range(10):
+            ship_x_row, ship_y_column = randint(0,9), randint(0,9)
+        while self.board[ship_x_row][ship_y_column] =='#':
+            ship_x_row, ship_y_column = randint(0, 9), randint(0, 9)
+        self.board[ship_x_row][ship_y_column] = '#'
 
 
     def get_input(self):
@@ -64,11 +61,11 @@ class Ships:
                 print("Not an avilable row, please select again")
                 x_row = input("Please enter the row of your guess: ")
 
-            y_column = input("Please enter the column of your guess: ")
+            y_column = input("Please enter the column of your guess: ").upper()
             while y_column not in 'ABCDEFGHI':
                 print("Not an avilable column, please select again")
-                x_row = input("Please enter the column of your guess: ")
-            return int(x_row) - 1, get_letter_to_num()[y_column]
+                y_column = input("Please enter the column of your guess: ").upper()
+            return int(x_row) - 1, Board.get_letter_to_num()[y_column]
         except ValueError and KeyError:
             print("Invalid input")
             return self.get_input()
@@ -105,16 +102,16 @@ def run_game():
         # Get user's input for guess
         user_x_row, user_y_column = Ships.get_input(object)
         # Check for duplicate guess
-        while guess_board.board[user_x_row][user_y_column] == "x" or
-        guess_board.board[user_x_row][user_y_column] == "#":
+        while guess_board.board[user_x_row][user_y_column] == "x" or guess_board.board[user_x_row][user_y_column] == "#":
             print("You've already guessed here. Please pick again")
+            user_x_row, user_y_column = Ships.get_input(object)
         # Check if guess was hit or miss
         if computer_board.board[user_x_row][user_y_column] == "#":
-            print("BOOM\n Direct Hit, Battleship sunk")
-            guess_board.board[user_x_row][user_y_column] == "#"
+            print("BOOM\nDirect Hit, Battleship sunk")
+            guess_board.board[user_x_row][user_y_column] = "#"
         else:
-            print("SPLASH\n All you hit was water, Battleships missed")
-            guess_board.board[user_x_row][user_y_column] == "x"
+            print("SPLASH\nAll you hit was water, Battleships missed")
+            guess_board.board[user_x_row][user_y_column] = "x"
         # Check if game has been won, lost or continues
         if Ships.destroyed_ships(guess_board) == 10:
             print("You sunk the entire fleet of 10.\n YOU WIN")
@@ -126,3 +123,5 @@ def run_game():
                 print("Sorry the fleet got away.\n YOU LOSE")
                 Board.print_board(guess_board)
                 break
+
+run_game()
