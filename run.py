@@ -73,6 +73,7 @@ class Ships:
             print("Invalid input")
             return self.get_input()
 
+
     def destroyed_ships(self):
         """
         Checks to see if a ship has been destroyed
@@ -85,3 +86,43 @@ class Ships:
                 if column == "#":
                     ships_destroyed += 1
         return ships_destroyed
+
+
+def run_game():
+    """
+    Creates all the key elements of the game.
+    Including: creating the guess board and computer board containig the ships,
+    placing the ships in the computer board, tracking number of turns 
+    """
+    guess_board = Board([[" "] * 9 for i in range(9)])
+    computer_board = Board([[" "] * 9 for i in range(9)])
+    Ships.create_ships(computer_board)
+    # Start with 50 turns
+    turns = 50
+    while turns > 0:
+        # Print guess board
+        Board.print_board(guess_board)
+        # Get user's input for guess
+        user_x_row, user_y_column = Ships.get_input(object)
+        # Check for duplicate guess
+        while guess_board.board[user_x_row][user_y_column] == "x" or
+        guess_board.board[user_x_row][user_y_column] == "#":
+            print("You've already guessed here. Please pick again")
+        # Check if guess was hit or miss
+        if computer_board.board[user_x_row][user_y_column] == "#":
+            print("BOOM\n Direct Hit, Battleship sunk")
+            guess_board.board[user_x_row][user_y_column] == "#"
+        else:
+            print("SPLASH\n All you hit was water, Battleships missed")
+            guess_board.board[user_x_row][user_y_column] == "x"
+        # Check if game has been won, lost or continues
+        if Ships.destroyed_ships(guess_board) == 10:
+            print("You sunk the entire fleet of 10.\n YOU WIN")
+            break
+        else:
+            turns -= 1
+            print(f"You have {turns} turns left")
+            if turns == 0:
+                print("Sorry the fleet got away.\n YOU LOSE")
+                Board.print_board(guess_board)
+                break
