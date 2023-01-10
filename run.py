@@ -4,7 +4,8 @@ from random import randint
 
 class Board:
     """
-    Basics of the game board including creating the board
+    Creates the basics of the game board, converts letter guesses into
+    numbers and prints the board
     """
 
     def __init__(self, board):
@@ -45,7 +46,7 @@ class Ships:
         """
         for ship in range(10):
             ship_x_row, ship_y_column = randint(0,9), randint(0,9)
-        while self.board[ship_x_row][ship_y_column] =='#':
+        while self.board[ship_x_row][ship_y_column] == '#':
             ship_x_row, ship_y_column = randint(0, 9), randint(0, 9)
         self.board[ship_x_row][ship_y_column] = '#'
 
@@ -53,17 +54,17 @@ class Ships:
     def get_input(self):
         """
         Collects the user input and checks to see if it is valid,
-        weither that is an available section or correct data type
+        if that is an available selection and correct data type
         """
         try:
             x_row = input("Please enter the row of your guess: ")
             while x_row not in '123456789':
-                print("Not an avilable row, please select again")
+                print("Not an available row, please select again")
                 x_row = input("Please enter the row of your guess: ")
 
             y_column = input("Please enter the column of your guess: ").upper()
             while y_column not in 'ABCDEFGHI':
-                print("Not an avilable column, please select again")
+                print("Not an available column, please select again")
                 y_column = input("Please enter the column of your guess: ").upper()
             return int(x_row) - 1, Board.get_letter_to_num()[y_column]
         except ValueError and KeyError:
@@ -96,7 +97,7 @@ def intro():
     print("The current situation is as follows: \n"
           "A fleet of 10 enemy Battleships has been seen in our waters\n"
           "And we need your tactical expertise to defeat them\n"
-          "With the 50 missles we have left at our disposals\n"
+          "With the 50 missiles we have left at our disposals\n"
           "So when you are ready please make your way to the bridge")
     
     start_game = input("Please press Y to to begin the game: ").upper()
@@ -107,7 +108,7 @@ def intro():
 def run_game():
     """
     Creates all the key elements of the game.
-    Including: creating the guess board and computer board containig the ships,
+    Including: creating the guess board and computer board containing the ships,
     placing the ships in the computer board, tracking number of turns 
     """
     guess_board = Board([[" "] * 9 for i in range(9)])
@@ -137,7 +138,7 @@ def run_game():
             break
         else:
             turns -= 1
-            print(f"We have {turns} missles left")
+            print(f"We have {turns} missiles left")
             if turns == 0:
                 print("Sorry the fleet got away.\n YOU LOSE")
                 Board.print_board(guess_board)
