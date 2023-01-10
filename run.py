@@ -85,6 +85,25 @@ class Ships:
         return ships_destroyed
 
 
+def intro():
+    """
+    An introduction into the game, which gets the player's name,
+    explains the game to them and checks if they are ready to play
+    """
+    print("Hello There. For security reasons can we please have your name?")
+    players_name = input("Please enter your name: ")
+    print(f"Access granted. Welcome to the war room Admiral {players_name}")
+    print("The current situation is as follows: \n"
+          "A fleet of 10 enemy Battleships has been seen in our waters\n"
+          "And we need your tactical expertise to defeat them\n"
+          "With the 50 missles we have left at our disposals\n"
+          "So when you are ready please make your way to the bridge")
+    
+    start_game = input("Please press Y to to begin the game: ").upper()
+    if start_game != "Y":
+        start_game = input("Please press Y to to begin the game: ").upper()
+
+
 def run_game():
     """
     Creates all the key elements of the game.
@@ -114,14 +133,23 @@ def run_game():
             guess_board.board[user_x_row][user_y_column] = "x"
         # Check if game has been won, lost or continues
         if Ships.destroyed_ships(guess_board) == 10:
-            print("You sunk the entire fleet of 10.\n YOU WIN")
+            print("You sunk the entire fleet.\n YOU WIN")
             break
         else:
             turns -= 1
-            print(f"You have {turns} turns left")
+            print(f"We have {turns} missles left")
             if turns == 0:
                 print("Sorry the fleet got away.\n YOU LOSE")
                 Board.print_board(guess_board)
                 break
 
-run_game()
+def play_game():
+    """
+    A function which calls the intro and run_game functions
+    so the player can play the game
+    """
+    intro()
+    run_game()
+
+
+play_game()
