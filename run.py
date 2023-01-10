@@ -17,8 +17,7 @@ class Board:
         Converts the letters of the columns into numbers
         so it can be used in the user input
         """
-        letter_to_num = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4, "F": 5, 
-        "G": 6, "H": 7, "I": 8}
+        letter_to_num = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4}
         return letter_to_num
 
 
@@ -26,8 +25,8 @@ class Board:
         """
         Print the board to the user to play the game
         """
-        print("  A B C D E F G H I")
-        print(" +-+-+-+-+-+-+-+-+-+")
+        print("  A B C D E   ")
+        print(" +-+-+-+-+-+ ")
         row_num = 1
         for row in self.board:
             print("%d|%s|" % (row_num, "|".join(row)))
@@ -45,10 +44,11 @@ class Ships:
         whilst also checking there isn't already a ship there
         """
         for ship in range(10):
-            ship_x_row, ship_y_column = randint(0,9), randint(0,9)
+            ship_x_row, ship_y_column = randint(0,4), randint(0,4)
         while self.board[ship_x_row][ship_y_column] == '#':
-            ship_x_row, ship_y_column = randint(0, 9), randint(0, 9)
+            ship_x_row, ship_y_column = randint(0, 4), randint(0, 4)
         self.board[ship_x_row][ship_y_column] = '#'
+        return self.board
 
 
     def get_input(self):
@@ -58,12 +58,12 @@ class Ships:
         """
         try:
             x_row = input("Please enter the row of your guess: ")
-            while x_row not in '123456789':
+            while x_row not in '12345':
                 print("Not an available row, please select again")
                 x_row = input("Please enter the row of your guess: ")
 
             y_column = input("Please enter the column of your guess: ").upper()
-            while y_column not in 'ABCDEFGHI':
+            while y_column not in 'ABCDE':
                 print("Not an available column, please select again")
                 y_column = input("Please enter the column of your guess: ").upper()
             return int(x_row) - 1, Board.get_letter_to_num()[y_column]
@@ -91,14 +91,23 @@ def intro():
     An introduction into the game, which gets the player's name,
     explains the game to them and checks if they are ready to play
     """
+     print("+--------------------------------+\n"
+          "  Welcome To Tactical Sea Combat  \n"
+          "+--------------------------------+")
     print("Hello There. For security reasons can we please have your name?")
     players_name = input("Please enter your name: ")
+    print("+--------------------------------+")
     print(f"Access granted. Welcome to the war room Admiral {players_name}")
+    print("+--------------------------------+")
     print("The current situation is as follows: \n"
+          "+--------------------------------+\n"
           "A fleet of 10 enemy Battleships has been seen in our waters\n"
-          "And we need your tactical expertise to defeat them\n"
-          "With the 50 missiles we have left at our disposals\n"
-          "So when you are ready please make your way to the bridge")
+          "+--------------------------------+\n"
+          "And we need your tactical expertise to defeat the enemy\n"
+          "Using only the 50 missiles we have left at our disposals\n"
+          "+--------------------------------+\n"
+          "So when you are ready please make your way to the bridge\n"
+          "+--------------------------------+")
     
     start_game = input("Please press Y to to begin the game: ").upper()
     if start_game != "Y":
@@ -111,11 +120,11 @@ def run_game():
     Including: creating the guess board and computer board containing the ships,
     placing the ships in the computer board, tracking number of turns 
     """
-    guess_board = Board([[" "] * 9 for i in range(9)])
-    computer_board = Board([[" "] * 9 for i in range(9)])
+    guess_board = Board([[" "] * 5 for i in range(5)])
+    computer_board = Board([[" "] * 5 for i in range(5)])
     Ships.create_ships(computer_board)
-    # Start with 50 turns
-    turns = 50
+    # Start with 25 turns
+    turns = 25
     while turns > 0:
         # Print guess board
         Board.print_board(guess_board)

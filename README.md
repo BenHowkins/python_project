@@ -1,9 +1,15 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+<h1>TACTICAL SEA COMBAT</h1>
 
-Welcome Ben Howkins,
+Tactical Sea Combat is a python game, which runs in Heroku
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
+Users are tasked with destroying an enemy fleet of ship without running out of
+missiles. Each enemy ship will take up one square on the game board.
 
+<h2>How To Play</h2>
+
+Tactical Sea Combat is a version of the classic pen and paper and board game "Battleships".
+
+In this version, the player
 ## Reminders
 
 * Your code must be placed in the `run.py` file
