@@ -43,10 +43,8 @@ class Ships:
         Creates and places the ships on the guess board
         whilst also checking there isn't already a ship there
         """
-        for ship in range(10):
+        for ship in range(1):
             ship_x_row, ship_y_column = randint(0,4), randint(0,4)
-        while self.board[ship_x_row][ship_y_column] == '#':
-            ship_x_row, ship_y_column = randint(0, 4), randint(0, 4)
         self.board[ship_x_row][ship_y_column] = '#'
         return self.board
 
@@ -91,7 +89,7 @@ def intro():
     An introduction into the game, which gets the player's name,
     explains the game to them and checks if they are ready to play
     """
-     print("+--------------------------------+\n"
+    print("+--------------------------------+\n"
           "  Welcome To Tactical Sea Combat  \n"
           "+--------------------------------+")
     print("Hello There. For security reasons can we please have your name?")
@@ -123,34 +121,35 @@ def run_game():
     guess_board = Board([[" "] * 5 for i in range(5)])
     computer_board = Board([[" "] * 5 for i in range(5)])
     Ships.create_ships(computer_board)
-    # Start with 25 turns
-    turns = 25
+    # Start with 10 turns
+    turns = 10
     while turns > 0:
         # Print guess board
         Board.print_board(guess_board)
         # Get user's input for guess
         user_x_row, user_y_column = Ships.get_input(object)
         # Check for duplicate guess
-        while guess_board.board[user_x_row][user_y_column] == "x" or guess_board.board[user_x_row][user_y_column] == "#":
+        while guess_board.board[user_x_row][user_y_column] == "x":
             print("You've already guessed here. Please pick again")
             user_x_row, user_y_column = Ships.get_input(object)
         # Check if guess was hit or miss
         if computer_board.board[user_x_row][user_y_column] == "#":
-            print("BOOM\nDirect Hit, Battleship sunk")
             guess_board.board[user_x_row][user_y_column] = "#"
         else:
             print("SPLASH\nAll you hit was water, Battleships missed")
             guess_board.board[user_x_row][user_y_column] = "x"
         # Check if game has been won, lost or continues
-        if Ships.destroyed_ships(guess_board) == 10:
-            print("You sunk the entire fleet.\n YOU WIN")
+        if Ships.destroyed_ships(guess_board) == 1:
+            print("BOOM\nYou sunk the rouge submarine.\nYOU WIN")
+            Board.print_board(guess_board)
             break
         else:
             turns -= 1
             print(f"We have {turns} missiles left")
             if turns == 0:
                 print("Sorry the fleet got away.\n YOU LOSE")
-                Board.print_board(guess_board)
+                Board.print_board(computer_board)
+                print("The enemy was here")
                 break
 
 def play_game():
