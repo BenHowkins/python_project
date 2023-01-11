@@ -2,14 +2,23 @@
 
 Tactical Sea Combat is a python game, which runs in Heroku
 
-Users are tasked with destroying an enemy fleet of ship without running out of
-missiles. Each enemy ship will take up one square on the game board.
+Users are tasked with destroying an enemy submarine without running out of
+missiles. The enemy sub will take up one square on the 5 by 5 game board.
 
 <h2>How To Play</h2>
 
 Tactical Sea Combat is a version of the classic pen and paper and board game "Battleships".
 
-In this version, the player
+In this version, the player is asked to enter their name to confirm their identity. They are then taken
+to the "War Room" where they are given the basics rules of the game and are asked to confim they want to continue.
+
+Upon confirming they want to play, two boards are created, a blank guess board and the computer's board which contains a single square containing a "#" symbol which is the location of the enemy submarine but isn't displayed to the user.
+
+The player then has up to 10 guess to try and find the correct square containing the "#" and locate the enemy sub.
+
+For every unsuccessful guess, a "x" will be added to both the guess and computer boards. This is so user knows where they have guessed and the computer can alert if a duplicate guess is made.
+
+If the player is able to find the enemy sub within 10 turns they are deemed the winner but if they fail the enemy sub will escape and they will lose.
 ## Reminders
 
 * Your code must be placed in the `run.py` file

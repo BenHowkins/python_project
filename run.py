@@ -1,6 +1,6 @@
 #Imports
 from random import randint
-
+from time import sleep
 
 class Board:
     """
@@ -32,16 +32,15 @@ class Board:
             print("%d|%s|" % (row_num, "|".join(row)))
             row_num += 1
 
-class Ships:
+class Ship:
     """
-    Deals with the main functions of the ships including
-    creating and placing the ships, getting user input
+    Deals with the main functions of the ship including
+    creating and placing the ship, getting user input
     and checking if they've been destroyed
     """
-    def create_ships(self):
+    def create_ship(self):
         """
-        Creates and places the ships on the guess board
-        whilst also checking there isn't already a ship there
+        Creates and places the ship on the guess board
         """
         for ship in range(1):
             ship_x_row, ship_y_column = randint(0,4), randint(0,4)
@@ -70,18 +69,26 @@ class Ships:
             return self.get_input()
 
 
-    def destroyed_ships(self):
+    def destroyed_ship(self):
         """
-        Checks to see if a ship has been destroyed
-        and keeps count on how many are left on the board
-        and how many have been destroyed
+        Checks to see if the ship has been destroyed
         """
-        ships_destroyed = 0
+        ship_destroyed = 0
         for row in self.board:
             for column in row:
                 if column == "#":
-                    ships_destroyed += 1
-        return ships_destroyed
+                    ship_destroyed += 1
+        return ship_destroyed
+
+
+def slow_print(txt):
+    """
+    
+    """
+    for x in txt:
+        print(x, end='', flush=True)
+        sleep(0.15)
+    print()
 
 
 def intro():
@@ -95,17 +102,18 @@ def intro():
     print("Hello There. For security reasons can we please have your name?")
     players_name = input("Please enter your name: ")
     print("+--------------------------------+")
-    print(f"Access granted. Welcome to the war room Admiral {players_name}")
+    slow_print(f"Access granted. Welcome to the War Room Admiral {players_name}")
     print("+--------------------------------+")
-    print("The current situation is as follows: \n"
-          "+--------------------------------+\n"
-          "A fleet of 10 enemy Battleships has been seen in our waters\n"
-          "+--------------------------------+\n"
-          "And we need your tactical expertise to defeat the enemy\n"
-          "Using only the 50 missiles we have left at our disposals\n"
-          "+--------------------------------+\n"
-          "So when you are ready please make your way to the bridge\n"
-          "+--------------------------------+")
+    slow_print("The current situation is as follows:")
+    print("+--------------------------------+")
+    slow_print("A Rouge Submarine has been seen in our waters")
+    print("+--------------------------------+")
+    slow_print("We have narrowed it location to a 5 mile square area\n"
+               "And we need your tactical expertise to defeat the enemy\n"
+               "However we only have 10 missiles left at our disposals")
+    print("+--------------------------------+")
+    slow_print("So when you are ready please make your way to the bridge")
+    print("+--------------------------------+")
     
     start_game = input("Please press Y to to begin the game: ").upper()
     if start_game != "Y":
@@ -120,18 +128,18 @@ def run_game():
     """
     guess_board = Board([[" "] * 5 for i in range(5)])
     computer_board = Board([[" "] * 5 for i in range(5)])
-    Ships.create_ships(computer_board)
+    Ship.create_ship(computer_board)
     # Start with 10 turns
     turns = 10
     while turns > 0:
         # Print guess board
         Board.print_board(guess_board)
         # Get user's input for guess
-        user_x_row, user_y_column = Ships.get_input(object)
+        user_x_row, user_y_column = Ship.get_input(object)
         # Check for duplicate guess
         while guess_board.board[user_x_row][user_y_column] == "x":
             print("You've already guessed here. Please pick again")
-            user_x_row, user_y_column = Ships.get_input(object)
+            user_x_row, user_y_column = Ship.get_input(object)
         # Check if guess was hit or miss
         if computer_board.board[user_x_row][user_y_column] == "#":
             guess_board.board[user_x_row][user_y_column] = "#"
@@ -139,7 +147,7 @@ def run_game():
             print("SPLASH\nAll you hit was water, Battleships missed")
             guess_board.board[user_x_row][user_y_column] = "x"
         # Check if game has been won, lost or continues
-        if Ships.destroyed_ships(guess_board) == 1:
+        if Ship.destroyed_ship(guess_board) == 1:
             print("BOOM\nYou sunk the rouge submarine.\nYOU WIN")
             Board.print_board(guess_board)
             break
@@ -147,10 +155,23 @@ def run_game():
             turns -= 1
             print(f"We have {turns} missiles left")
             if turns == 0:
-                print("Sorry the fleet got away.\n YOU LOSE")
+                print("Sorry the fleet got away.\nYOU LOSE")
                 Board.print_board(computer_board)
                 print("The enemy was here")
-                break
+        
+
+def play_again():
+    """
+    Creates a function to see if they want to play again
+    and if they do restart the game
+    """
+    new_game = input("Would you like another game: (Y)es or (N)o?").upper()
+    if new_game == "Y":
+        run_game()
+    elif new_game == "N":
+        slow_print("Thank You For Playing")
+    else:
+        input("Would you like another game: (Y)es or (N)o?").upper()
 
 def play_game():
     """
@@ -159,6 +180,7 @@ def play_game():
     """
     intro()
     run_game()
+    play_again()
 
 
 play_game()
