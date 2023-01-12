@@ -68,7 +68,7 @@ class Ship:
                 print("Not an available column, please select again")
                 y_column = input("Please enter your column guess: ").upper()
             return int(x_row) - 1, Board.get_letter_to_num(self)[y_column]
-        except ValueError and KeyError:
+        except (ValueError, KeyError):
             print("Invalid input")
             return self.get_input()
 
@@ -187,7 +187,7 @@ def play_game():
     A function which calls the intro and run_game functions
     so the player can play the game
     """
-
+    intro()
     run_game()
     play_again()
 
