@@ -1,4 +1,6 @@
-# Imports
+"""
+Imported files from python library
+"""
 from random import randint
 from time import sleep
 
@@ -12,7 +14,7 @@ class Board:
     def __init__(self, board):
         self.board = board
 
-    def get_letter_to_num():
+    def get_letter_to_num(self):
         """
         Converts the letters of the columns into numbers
         so it can be used in the user input
@@ -38,12 +40,15 @@ class Ship:
     creating and placing the ship, getting user input
     and checking if they've been destroyed
     """
+    def __init__(self, board):
+        self.board = board
+
     def create_ship(self):
         """
         Creates and places the ship on the guess board
         """
-        for ship in range(1):
-            ship_x_row, ship_y_column = randint(0, 4), randint(0, 4)
+        ship_x_row = randint(0, 4)
+        ship_y_column = randint(0, 4)
         self.board[ship_x_row][ship_y_column] = '#'
         return self.board
 
@@ -62,7 +67,7 @@ class Ship:
             while y_column not in 'ABCDE':
                 print("Not an available column, please select again")
                 y_column = input("Please enter your column guess: ").upper()
-            return int(x_row) - 1, Board.get_letter_to_num()[y_column]
+            return int(x_row) - 1, Board.get_letter_to_num(self)[y_column]
         except ValueError and KeyError:
             print("Invalid input")
             return self.get_input()
@@ -82,10 +87,10 @@ class Ship:
 def slow_print(txt):
     """
     Function which allows the text to print out at a slower rate
-    used to give the appearence of it being typed out
+    used to give the appearance of it being typed out
     """
-    for x in txt:
-        print(x, end='', flush=True)
+    for letter in txt:
+        print(letter, end='', flush=True)
         sleep(0.15)
     print()
 
@@ -144,7 +149,7 @@ def run_game():
             guess_board.board[user_x_row][user_y_column] = "#"
         else:
             print("SPLASH")
-            slow_print("All you hit was water, Battleships missed")
+            slow_print("All you hit was water, Submarine missed")
             guess_board.board[user_x_row][user_y_column] = "x"
         # Check if game has been won, lost or continues
         if Ship.destroyed_ship(guess_board) == 1:
@@ -182,7 +187,7 @@ def play_game():
     A function which calls the intro and run_game functions
     so the player can play the game
     """
-    intro()
+
     run_game()
     play_again()
 
