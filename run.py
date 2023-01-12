@@ -110,7 +110,7 @@ def intro():
     print("+--------------------------------+")
     slow_print("We have narrowed it location to a 5 mile square area\n"
                "And we need your tactical expertise to defeat the enemy\n"
-               "However we only have 10 missiles left at our disposals")
+               "However we only have 10 missiles left at our disposal")
     print("+--------------------------------+")
     slow_print("So when you are ready please make your way to the bridge")
     print("+--------------------------------+")
@@ -153,25 +153,27 @@ def run_game():
             break
         else:
             turns -= 1
-            print(f"We have {turns} missiles left")
+            print(f"We have {turns} missiles left Admiral.")
             if turns == 0:
                 print("Sorry the fleet got away.\nYOU LOSE")
                 Board.print_board(computer_board)
                 print("The enemy was here")
-        
+
 
 def play_again():
     """
     Creates a function to see if they want to play again
     and if they do restart the game
     """
-    new_game = input("Would you like another game: (Y)es or (N)o?").upper()
-    if new_game == "Y":
-        run_game()
-    elif new_game == "N":
-        slow_print("Thank You For Playing")
-    else:
-        input("Would you like another game: (Y)es or (N)o?").upper()
+    while True:
+        restart = input('do you want to restart: (Y)es/ (N)o?').upper()
+        if restart == 'N':
+            slow_print("Thank you for playing")
+            break
+        elif restart == 'Y':
+            run_game()
+        else:
+           restart = input('do you want to restart: (Y)es/ (N)o?').upper()
 
 def play_game():
     """

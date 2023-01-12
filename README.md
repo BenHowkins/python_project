@@ -19,6 +19,8 @@ The player then has up to 10 guess to try and find the correct square containing
 For every unsuccessful guess, a "x" will be added to both the guess and computer boards. This is so user knows where they have guessed and the computer can alert if a duplicate guess is made.
 
 If the player is able to find the enemy sub within 10 turns they are deemed the winner but if they fail the enemy sub will escape and they will lose.
+
+<h2>Features</h2>
 ## Reminders
 
 * Your code must be placed in the `run.py` file
