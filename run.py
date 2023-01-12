@@ -144,18 +144,20 @@ def run_game():
         if computer_board.board[user_x_row][user_y_column] == "#":
             guess_board.board[user_x_row][user_y_column] = "#"
         else:
-            print("SPLASH\nAll you hit was water, Battleships missed")
+            print("SPLASH")
+            slow_print("All you hit was water, Battleships missed")
             guess_board.board[user_x_row][user_y_column] = "x"
         # Check if game has been won, lost or continues
         if Ship.destroyed_ship(guess_board) == 1:
-            print("BOOM\nYou sunk the rouge submarine.\nYOU WIN")
+            print("BOOM")
+            slow_print("You sunk the rouge submarine.\nYOU WIN")
             Board.print_board(guess_board)
             break
         else:
             turns -= 1
             print(f"We have {turns} missiles left Admiral.")
             if turns == 0:
-                print("Sorry the fleet got away.\nYOU LOSE")
+                slow_print("Sorry Admiral the enemy got away.\nYOU LOSE")
                 Board.print_board(computer_board)
                 print("The enemy was here")
 
@@ -166,9 +168,9 @@ def play_again():
     and if they do restart the game
     """
     while True:
-        restart = input('do you want to restart: (Y)es/ (N)o?').upper()
+        restart = input('Do You Wish To Play Again: (Y)es/ (N)o?').upper()
         if restart == 'N':
-            slow_print("Thank you for playing")
+            slow_print("Thank You For Your Service Admiral")
             break
         elif restart == 'Y':
             run_game()

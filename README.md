@@ -21,7 +21,38 @@ For every unsuccessful guess, a "x" will be added to both the guess and computer
 If the player is able to find the enemy sub within 10 turns they are deemed the winner but if they fail the enemy sub will escape and they will lose.
 
 <h2>Features</h2>
-## Reminders
+
+<h3>Existing Features</h3>
+
+* Random board generation
+    * The enemy submarine is randomly place somewhere on the computer's board.
+    * The subs location isn't visable to the player until they either successfully guess it's location or run out of missiles and lose, at which point it is displayed to the player
+
+* Accepts user input
+    * On several occasions the player is asked for input which effects the game in some way.
+        * At the beginning of the game the player are asked for their name, which is then used to "athorise" their clearance and is used to refer to them by name in the introduction.
+        * After the introductionary text explaining the game is the player is asked to press the "Y" key to proceed to the game. Intil this is done the game won't proceed.
+        * During the game the player is asked for their guesses using inputs of the number of the row and letter of the column they believe the sub is in.
+        * After the game is won or lost the player is asked if they would like to restart the game using an input: "Y" restarts the game, "N" closes the game after a message is displayed and all other iputs result in the input request message to be replayed.
+    
+* The current guess board displayed with pass guess locations, which is updated as new guesses are made.
+
+* Messages to the player after each guess saying if they were successful in hitting the enemy as well as a count of how many missiles (turns) they have left.
+
+* Input validation and error-checking
+    * The player must enter the correct input to start the game otherwise the message will continue to reprint until the player enters the required input.
+    * During the game the player is unable to enter a number or letter that doesn't respond to a row or column or the game board.
+    * The player is unable to enter a dupliucate guess and is met with a message stating it's a duplicate guess and asks them to enter another guess.
+    * The restart game message only allows you to enter "Y" to restart the game and "N" to end the game, any other input will result in the restart game message to be displayed again.
+
+<h3>Future Features</h3>
+
+* Have different difficulty levels with larger boards containing more submarines.
+* Allow the player to compete against the computer, with each taking turns guessing where their opponent's submarines are positioned.
+* Allow the player to position their own submarines.
+* Have different size submarines.
+
+
 
 * Your code must be placed in the `run.py` file
 * Your dependencies must be placed in the `requirements.txt` file
