@@ -1,6 +1,7 @@
-#Imports
+# Imports
 from random import randint
 from time import sleep
+
 
 class Board:
     """
@@ -11,7 +12,6 @@ class Board:
     def __init__(self, board):
         self.board = board
 
-
     def get_letter_to_num():
         """
         Converts the letters of the columns into numbers
@@ -19,7 +19,6 @@ class Board:
         """
         letter_to_num = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4}
         return letter_to_num
-
 
     def print_board(self):
         """
@@ -32,6 +31,7 @@ class Board:
             print("%d|%s|" % (row_num, "|".join(row)))
             row_num += 1
 
+
 class Ship:
     """
     Deals with the main functions of the ship including
@@ -43,10 +43,9 @@ class Ship:
         Creates and places the ship on the guess board
         """
         for ship in range(1):
-            ship_x_row, ship_y_column = randint(0,4), randint(0,4)
+            ship_x_row, ship_y_column = randint(0, 4), randint(0, 4)
         self.board[ship_x_row][ship_y_column] = '#'
         return self.board
-
 
     def get_input(self):
         """
@@ -54,20 +53,19 @@ class Ship:
         if that is an available selection and correct data type
         """
         try:
-            x_row = input("Please enter the row of your guess: ")
+            x_row = input("Please enter your row guess: ")
             while x_row not in '12345':
                 print("Not an available row, please select again")
-                x_row = input("Please enter the row of your guess: ")
+                x_row = input("Please enter your row guess: ")
 
-            y_column = input("Please enter the column of your guess: ").upper()
+            y_column = input("Please enter your column guess: ").upper()
             while y_column not in 'ABCDE':
                 print("Not an available column, please select again")
-                y_column = input("Please enter the column of your guess: ").upper()
+                y_column = input("Please enter your column guess: ").upper()
             return int(x_row) - 1, Board.get_letter_to_num()[y_column]
         except ValueError and KeyError:
             print("Invalid input")
             return self.get_input()
-
 
     def destroyed_ship(self):
         """
@@ -83,7 +81,8 @@ class Ship:
 
 def slow_print(txt):
     """
-    
+    Function which allows the text to print out at a slower rate
+    used to give the appearence of it being typed out
     """
     for x in txt:
         print(x, end='', flush=True)
@@ -102,7 +101,7 @@ def intro():
     print("Hello There. For security reasons can we please have your name?")
     players_name = input("Please enter your name: ")
     print("+--------------------------------+")
-    slow_print(f"Access granted. Welcome to the War Room Admiral {players_name}")
+    slow_print(f"ACCESS GRANTED.\nWelcome Admiral {players_name}")
     print("+--------------------------------+")
     slow_print("The current situation is as follows:")
     print("+--------------------------------+")
@@ -114,7 +113,7 @@ def intro():
     print("+--------------------------------+")
     slow_print("So when you are ready please make your way to the bridge")
     print("+--------------------------------+")
-    
+
     start_game = input("Please press Y to to begin the game: ").upper()
     if start_game != "Y":
         start_game = input("Please press Y to to begin the game: ").upper()
@@ -123,8 +122,8 @@ def intro():
 def run_game():
     """
     Creates all the key elements of the game.
-    Including: creating the guess board and computer board containing the ships,
-    placing the ships in the computer board, tracking number of turns 
+    Including: creating the guess board and computer board containing
+    the ships, placing the ships in the computer board, tracking turns
     """
     guess_board = Board([[" "] * 5 for i in range(5)])
     computer_board = Board([[" "] * 5 for i in range(5)])
@@ -175,7 +174,8 @@ def play_again():
         elif restart == 'Y':
             run_game()
         else:
-           restart = input('do you want to restart: (Y)es/ (N)o?').upper()
+            restart = input('do you want to restart: (Y)es/ (N)o?').upper()
+
 
 def play_game():
     """

@@ -52,6 +52,40 @@ If the player is able to find the enemy sub within 10 turns they are deemed the 
 * Allow the player to position their own submarines.
 * Have different size submarines.
 
+<h2>Data Models</h2>
+
+I decided to go with two classes as my model.
+
+I went with a Board class to create both of the guess and computer boards. This works by using a print() method to print both boards to the desired dementions decided in the run_game() function. 
+
+I also have a Ship class to create the sub, take the player's guess and deal with the sub being destroyed. This is done by using the create_ship() function to createand randomly position the sub, the get_input() function to recieve the player's guesses in the form of data input and use the destroyed_ship() function to see if the player's guess results in the enemy sub being destroyed.
+
+<h2>Testing</h2>
+
+I have manually tested this project in the following ways:
+  * Passed it through the Code Institute Python Linter and recieved no errors
+  * Given invalid data into all available inputs: 
+    * Input strings when numbers were expected and numbers when strings were expected.
+    * Input numbers and strings out of the available range of co-ordinates
+    * Input duplucate guesses
+    * Input invalid options to the "Start Game" and "Restart Game" 
+  * Tested in my local terminal
+
+<h2>Bugs</h2>
+
+<h3>Fixed Bugs</h3>
+
+* The play_again() function would only run twice and wouldn't display the farewell message when you selected to end the game. I fixed this by adding a while True: to the start of the if/ else statement and a break after the farewell message.
+
+<h3>Known Bugs</h3>
+
+* The create_ship() function was initionally meant to create several ships and the game board was meant to be larger however despite looking on several website and asking help from my peers the function would only ever print out one ship to the board, so I decided to change the general concept of the game from a long drawn out battle sim with many guesses to a quick, shot single target game which allows replayability.
+
+<h2>Validator Testing</h2>
+
+* PEP8
+  * No errors were returned from https://pep8ci.herokuapp.com/
+
 
 
 * Your code must be placed in the `run.py` file
