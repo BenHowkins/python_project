@@ -5,6 +5,8 @@ Tactical Sea Combat is a python game, which runs in Heroku
 Users are tasked with destroying an enemy submarine without running out of
 missiles. The enemy sub will take up one square on the 5 by 5 game board.
 
+<a href = "https://tactical-sea-combat-project.herokuapp.com/">Here is the live version of my project</a>
+
 <h2>How To Play</h2>
 
 Tactical Sea Combat is a version of the classic pen and paper and board game "Battleships".
@@ -27,13 +29,18 @@ If the player is able to find the enemy sub within 10 turns they are deemed the 
 * Random board generation
     * The enemy submarine is randomly place somewhere on the computer's board.
     * The subs location isn't visable to the player until they either successfully guess it's location or run out of missiles and lose, at which point it is displayed to the player
+    <img src= "images/data_input.png">
 
 * Accepts user input
     * On several occasions the player is asked for input which effects the game in some way.
         * At the beginning of the game the player are asked for their name, which is then used to "athorise" their clearance and is used to refer to them by name in the introduction.
+        <img src= "images/intro_message.png">
         * After the introductionary text explaining the game is the player is asked to press the "Y" key to proceed to the game. Intil this is done the game won't proceed.
         * During the game the player is asked for their guesses using inputs of the number of the row and letter of the column they believe the sub is in.
-        * After the game is won or lost the player is asked if they would like to restart the game using an input: "Y" restarts the game, "N" closes the game after a message is displayed and all other iputs result in the input request message to be replayed.
+        <img src= "images/data_input.png">
+        * After the game is won or lost the player is asked if they would like to restart the game using an input: "Y" restarts the game, "N" closes the game after a message is displayed and all other inputs result in the input request message to be replayed.
+        <img src= "images/win_game.png">
+        <img src= "images/goodbye_message.png">
     
 * The current guess board displayed with pass guess locations, which is updated as new guesses are made.
 
@@ -42,7 +49,9 @@ If the player is able to find the enemy sub within 10 turns they are deemed the 
 * Input validation and error-checking
     * The player must enter the correct input to start the game otherwise the message will continue to reprint until the player enters the required input.
     * During the game the player is unable to enter a number or letter that doesn't respond to a row or column or the game board.
+    <img src= "images/invaid_input.png">
     * The player is unable to enter a dupliucate guess and is met with a message stating it's a duplicate guess and asks them to enter another guess.
+    <img src= "images/duplicate_input.png">
     * The restart game message only allows you to enter "Y" to restart the game and "N" to end the game, any other input will result in the restart game message to be displayed again.
 
 <h3>Future Features</h3>
@@ -86,28 +95,21 @@ I have manually tested this project in the following ways:
 * PEP8
   * No errors were returned from https://pep8ci.herokuapp.com/
 
+<h2>Deployment</h2>
 
+This project was deployed using Heroku.
 
-* Your code must be placed in the `run.py` file
-* Your dependencies must be placed in the `requirements.txt` file
-* Do not edit any of the other files or your code may not deploy properly
+   * Steps for deployment:
+     * Create a Heroku account.
+     * Create a new Heroku app with a unique name.
+     * Go to the "Settings" tab of the app and set any Config Vars that are required.
+     * Also in the "Settings" set the Buildpacks to "Python" and "NodeJS" in that order.
+     * Go to the "Deploy" tab and link Heroku to your GitHub account by selecting the "Github" option from the "Deployment Methods" section and entering your details.
+     * Search for the repository you wish to use and click "Connect" to link the Heroku app to the repositories code.
+     * Select either "Automatic Deploys" (where Heroku automatical redeploys the app when the code is changed) or "Manual Deploys" (Where you have to redeploy yourself when an changes are made) as your deployment method.
+     * Once the app has successfully deployed select the "view" button to see the newly deployed app.
 
-## Creating the Heroku app
+<h2>Credits</h2>
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
-
-1. `heroku/python`
-2. `heroku/nodejs`
-
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
-
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
-
-Connect your GitHub repository and deploy as normal.
-
-## Constraints
-
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
-
------
-Happy coding!
+* Code Institute for the Python Essentials Temlate this project was made with.
+* Heroku for use of there site to deploy the finished app.
