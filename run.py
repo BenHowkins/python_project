@@ -14,19 +14,11 @@ class Board:
     def __init__(self, board):
         self.board = board
 
-    def get_letter_to_num(self):
-        """
-        Converts the letters of the columns into numbers
-        so it can be used in the user input
-        """
-        letter_to_num = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4}
-        return letter_to_num
-
     def print_board(self):
         """
         Print the board to the user to play the game
         """
-        print("  A B C D E   ")
+        print("  1 2 3 4 5   ")
         print(" +-+-+-+-+-+ ")
         row_num = 1
         for row in self.board:
@@ -57,21 +49,18 @@ class Ship:
         Collects the user input and checks to see if it is valid,
         if that is an available selection and correct data type
         """
+        while True:
+            try:
+                x_row = int(input("Enter a row number between 1-5 >: "))
+                y_column = int(input("Enter a column number between 1-5 >: "))
+            except ValueError:
+                print("Only enter number!")
+                continue
+            if x_row not in range(1, 6) or y_column not in range(1, 6):
+                print("\nThe numbers must be between 1-5!")
+                continue
 
-        try:
-            x_row = input("Please enter your row guess: \n")
-            while x_row not in '12345':
-                print("Not an available row, please select again")
-                x_row = input("Please enter your row guess: \n")
-
-            y_column = input("Please enter your column guess: \n").upper()
-            while y_column not in 'ABCDE':
-                print("Not an available column, please select again")
-                y_column = input("Please enter your column guess: \n").upper()
-            return int(x_row) - 1, Board.get_letter_to_num(self)[y_column]
-        except EOFError:
-            print("Invalid input")
-            return self.get_input()
+            return int(x_row) - 1, int(y_column) - 1
 
     def destroyed_ship(self):
         """
@@ -104,21 +93,21 @@ def intro():
     print("+--------------------------------+\n"
           "  Welcome To Tactical Sea Combat  \n"
           "+--------------------------------+")
-    print("Hello There. For security reasons can we please have your name?")
-    # players_name = input("Please enter your name: \n")
-    # print("+--------------------------------+")
-    # slow_print(f"ACCESS GRANTED.\nWelcome Admiral {players_name}")
-    # print("+--------------------------------+")
-    # slow_print("The current situation is as follows:")
-    # print("+--------------------------------+")
-    # slow_print("A Rouge Submarine has been seen in our waters")
-    # print("+--------------------------------+")
-    # slow_print("We have narrowed it location to a 5 mile square area\n"
-    #            "And we need your tactical expertise to defeat the enemy\n"
-    #            "However we only have 10 missiles left at our disposal")
-    # print("+--------------------------------+")
-    # slow_print("So when you are ready please make your way to the bridge")
-    # print("+--------------------------------+")
+    print("Hello There. For Security Reasons Can We Please Have Your Name?")
+    players_name = input("Please Enter Your Name: \n")
+    print("+--------------------------------+")
+    slow_print(f"ACCESS GRANTED.\nWelcome Admiral {players_name}")
+    print("+--------------------------------+")
+    slow_print("The Current Situation Is As Follows:")
+    print("+--------------------------------+")
+    slow_print("A Rouge Submarine Has Been Seen In Our Waters")
+    print("+--------------------------------+")
+    slow_print("We Have Narrowed It Location To A 5 Mile Square Area\n"
+               "And We Need Your Tactical Expertise To Defeat The Enemy\n"
+               "However We Only Have 10 Missiles Left At Our Disposal")
+    print("+--------------------------------+")
+    slow_print("So When You Are Ready Please Make Your Way To The Bridge")
+    print("+--------------------------------+")
 
 
 def start_input():
@@ -155,28 +144,28 @@ def run_game():
         user_x_row, user_y_column = Ship.get_input(object)
         # Check for duplicate guess
         while guess_board.board[user_x_row][user_y_column] == "x":
-            print("You've already guessed here. Please pick again")
+            print("You've Already Guessed Here. Please Pick Again")
             user_x_row, user_y_column = Ship.get_input(object)
         # Check if guess was hit or miss
         if computer_board.board[user_x_row][user_y_column] == "#":
             guess_board.board[user_x_row][user_y_column] = "#"
         else:
             print("SPLASH")
-            slow_print("All you hit was water, Submarine missed")
+            slow_print("All You Hit Was Water, Submarine Missed")
             guess_board.board[user_x_row][user_y_column] = "x"
         # Check if game has been won, lost or continues
         if Ship.destroyed_ship(guess_board) == 1:
             print("BOOM")
-            slow_print("You sunk the rouge submarine.\nYOU WIN")
+            slow_print("You Sunk The Rouge Submarine.\nYOU WIN")
             Board.print_board(guess_board)
             break
         else:
             turns -= 1
-            print(f"We have {turns} missiles left Admiral.")
+            print(f"We Have {turns} Missiles Left Admiral.")
             if turns == 0:
-                slow_print("Sorry Admiral the enemy got away.\nYOU LOSE")
+                slow_print("Sorry Admiral The Enemy Has Escaped.\nYOU LOSE")
                 Board.print_board(computer_board)
-                print("The enemy was here")
+                print("The Enemy's location Was Here")
 
 
 def play_again():
@@ -185,14 +174,18 @@ def play_again():
     and if they do restart the game
     """
     while True:
-        restart = input('Do You Wish To Play Again: (Y)es/ (N)o?\n').upper()
+        try:
+            restart = input('Play Again Admiral: (Y)es/ (N)o?\n').upper()
+        except EOFError:
+            print("Invalid Input. PLease Try Again")
+            continue
         if restart == 'N':
             slow_print("Thank You For Your Service Admiral")
             break
         elif restart == 'Y':
             run_game()
         else:
-            restart = input('do you want to restart: (Y)es/ (N)o?\n').upper()
+            print('Play Again Admiral: (Y)es/ (N)o?\n')
 
 
 def play_game():
