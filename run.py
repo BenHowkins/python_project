@@ -57,6 +57,7 @@ class Ship:
         Collects the user input and checks to see if it is valid,
         if that is an available selection and correct data type
         """
+
         try:
             x_row = input("Please enter your row guess: \n")
             while x_row not in '12345':
@@ -68,7 +69,7 @@ class Ship:
                 print("Not an available column, please select again")
                 y_column = input("Please enter your column guess: \n").upper()
             return int(x_row) - 1, Board.get_letter_to_num(self)[y_column]
-        except (ValueError, KeyError):
+        except EOFError:
             print("Invalid input")
             return self.get_input()
 
@@ -98,30 +99,42 @@ def slow_print(txt):
 def intro():
     """
     An introduction into the game, which gets the player's name,
-    explains the game to them and checks if they are ready to play
+    explains the game to them.
     """
     print("+--------------------------------+\n"
           "  Welcome To Tactical Sea Combat  \n"
           "+--------------------------------+")
     print("Hello There. For security reasons can we please have your name?")
-    players_name = input("Please enter your name: \n")
-    print("+--------------------------------+")
-    slow_print(f"ACCESS GRANTED.\nWelcome Admiral {players_name}")
-    print("+--------------------------------+")
-    slow_print("The current situation is as follows:")
-    print("+--------------------------------+")
-    slow_print("A Rouge Submarine has been seen in our waters")
-    print("+--------------------------------+")
-    slow_print("We have narrowed it location to a 5 mile square area\n"
-               "And we need your tactical expertise to defeat the enemy\n"
-               "However we only have 10 missiles left at our disposal")
-    print("+--------------------------------+")
-    slow_print("So when you are ready please make your way to the bridge")
-    print("+--------------------------------+")
+    # players_name = input("Please enter your name: \n")
+    # print("+--------------------------------+")
+    # slow_print(f"ACCESS GRANTED.\nWelcome Admiral {players_name}")
+    # print("+--------------------------------+")
+    # slow_print("The current situation is as follows:")
+    # print("+--------------------------------+")
+    # slow_print("A Rouge Submarine has been seen in our waters")
+    # print("+--------------------------------+")
+    # slow_print("We have narrowed it location to a 5 mile square area\n"
+    #            "And we need your tactical expertise to defeat the enemy\n"
+    #            "However we only have 10 missiles left at our disposal")
+    # print("+--------------------------------+")
+    # slow_print("So when you are ready please make your way to the bridge")
+    # print("+--------------------------------+")
 
-    start_game = input("Please press Y to to begin the game: \n").upper()
-    if start_game != "Y":
-        start_game = input("Please press Y to to begin the game: \n").upper()
+
+def start_input():
+    """
+    A data input which checks if they are ready to play the game
+    """
+    while True:
+        try:
+            start_game = input("Please Press Y To Begin: \n").upper()
+        except EOFError:
+            print("Invalid Input. Please Enter Again")
+            continue
+        if start_game == "Y":
+            break
+        else:
+            print("Invalid Input. Please Enter Again")
 
 
 def run_game():
@@ -188,6 +201,7 @@ def play_game():
     so the player can play the game
     """
     intro()
+    start_input()
     run_game()
     play_again()
 
