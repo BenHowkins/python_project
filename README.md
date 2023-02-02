@@ -33,10 +33,11 @@ If the player is able to find the enemy sub within 10 turns they are deemed the 
 
 * Accepts user input
     * On several occasions the player is asked for input which effects the game in some way.
-        * At the beginning of the game the player are asked for their name, which is then used to "athorise" their clearance and is used to refer to them by name in the introduction.
+        * At the beginning of the game the player are asked for their name, which is then used to "athorise" their clearance and is used to refer to them by name in the introduction. This however can be left blank if the player does not wish to enter their name.
         <img src= "images/intro_message.png">
-        * After the introductionary text explaining the game is the player is asked to press the "Y" key to proceed to the game. Intil this is done the game won't proceed.
-        * During the game the player is asked for their guesses using inputs of the number of the row and letter of the column they believe the sub is in.
+        * After the introductionary text explaining the game is the player is asked to press the "Y" key to proceed to the game. Until this is done the game won't proceed.
+        <img src= "images/game_start.png">
+        * During the game the player is asked for their guesses using inputs of the number of the row and column they believe the sub is in.
         <img src= "images/data_input.png">
         * After the game is won or lost the player is asked if they would like to restart the game using an input: "Y" restarts the game, "N" closes the game after a message is displayed and all other inputs result in the input request message to be replayed.
         <img src= "images/win_game.png">
@@ -48,11 +49,13 @@ If the player is able to find the enemy sub within 10 turns they are deemed the 
 
 * Input validation and error-checking
     * The player must enter the correct input to start the game otherwise the message will continue to reprint until the player enters the required input.
-    * During the game the player is unable to enter a number or letter that doesn't respond to a row or column or the game board.
+    <img src= "images/game_start.png">
+    * During the game the player is unable to enter a number that doesn't respond to a row or column or the game board.
     <img src= "images/invaid_input.png">
     * The player is unable to enter a dupliucate guess and is met with a message stating it's a duplicate guess and asks them to enter another guess.
     <img src= "images/duplicate_input.png">
     * The restart game message only allows you to enter "Y" to restart the game and "N" to end the game, any other input will result in the restart game message to be displayed again.
+    <img src= "images/exit_input.png">
 
 <h3>Future Features</h3>
 
@@ -73,18 +76,28 @@ I also have a Ship class to create the sub, take the player's guess and deal wit
 
 I have manually tested this project in the following ways:
   * Passed it through the Code Institute Python Linter and recieved no errors
+  <img src= "images/code_vaildator.png">
   * Given invalid data into all available inputs: 
     * Input strings when numbers were expected and numbers when strings were expected.
-    * Input numbers and strings out of the available range of co-ordinates
+    <img src= "images/invaid_input.png">
+    * Input numbers that were out of the available range of co-ordinates
+    <img src= "images/invaid_coordinates.png">
     * Input duplucate guesses
-    * Input invalid options to the "Start Game" and "Restart Game" 
-  * Tested in my local terminal
+    <img src= "images/duplicate-input.png">
+    * Input empty input fields
+    <img src= "images/empty_field.png">
+    * Input invalid options to the "Restart Game"
+    <img src= "images/exit_input.png">
+  * Tested in my local terminal and on the Heroku app
 
 <h2>Bugs</h2>
 
 <h3>Fixed Bugs</h3>
 
 * The play_again() function would only run twice and wouldn't display the farewell message when you selected to end the game. I fixed this by adding a while True: to the start of the if/ else statement and a break after the farewell message.
+* It was brought to my attention after publishing that inputting an empty input into the get_input() guess field would cause the game to crash. I fixed this by changing the design of the section from row being numbers and columns being letters to both being numbers. I did this as despite extensive research and trial and error, I could not find a solution to the problem  which didn't cause another issue or didn't fix the problem. After changing the columns to numbers I was able to put both inputs in a single try/ exept/ if statement, starting with a "while True" statement. This means the function could check for EOFErrors, check that the input is a valid selection and would still work as originally purposed.
+* It was also brought to my attention after publishing that a similar issue occured with empty inputs would cause the play_again() field to crash. I fixed this issue by adding try and except statements before the if/ elif /else staements that I added to fix a previous bug. This let me account for possible EOFErrors and would prevent crashing.
+* An empty input was accepted as an acceptable input in the start_game input option in the intro() function. I fixed this by moving the start_game input into it's own function called start_input(). There I put the input option into a try/ except/ if/ else statement starting with a "while True" statement. this allowed me to check for invalid and empty inputs correctly.
 
 <h3>Known Bugs</h3>
 
@@ -94,6 +107,8 @@ I have manually tested this project in the following ways:
 
 * PEP8
   * No errors were returned from https://pep8ci.herokuapp.com/
+  
+  <img src= "images/code_validator.png">
 
 <h2>Deployment</h2>
 
